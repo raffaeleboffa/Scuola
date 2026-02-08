@@ -1,0 +1,44 @@
+import halocode
+import event
+
+@event.start
+def on_start():
+    halocode.wifi.start(ssid = 'boffarouter', password = 'sommer123', mode = halocode.wifi.WLAN_MODE_STA)
+    while not halocode.wifi.is_connected():
+        pass
+
+    halocode.led.show_all(126, 211, 33)
+    time.sleep(2)
+    halocode.led.off_all()
+
+
+
+
+
+
+
+
+# --- 2. Gestione del Pulsante e Webhook ---
+@event.button_a_pressed
+def on_button_a():
+    """Questa funzione viene chiamata quando il pulsante A è premuto."""
+    
+    print("Pulsante premuto. Invio comando Webhook...")
+    
+    # Mostra un feedback visivo (LED blu)
+    hapi.led.show_rgb(0, 0, 255) 
+
+    # Invia la richiesta HTTP GET al tuo Webhook GAS
+    try:
+        response = urequests.get(WEBHOOK_URL)
+        print(f"Webhook inviato. Codice di stato: {response.status_code}")
+        response.close() # Importante chiudere la connessione
+        
+    except Exception as e:
+        print(f"Errore durante l'invio del Webhook: {e}")
+        hapi.led.show_rgb(255, 0, 0) # LED Rosso in caso di errore
+        time.sleep(0.5)
+
+    # Spegni il LED dopo l'invio
+    hapi.led.off()
+    time.sleep(0.1)

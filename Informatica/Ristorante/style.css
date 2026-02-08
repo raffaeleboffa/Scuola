@@ -1,0 +1,106 @@
+@font-face {
+    font-family: 'Jost';
+    src: url('font/static/Jost-Regular.ttf');
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: Jost;
+    color: var(--beige)
+}
+
+:root {
+    --grey: #E5E0D8;
+    --beige: #D1A980;
+    --sage: #748873;
+}
+
+body {
+    background-color: var(--grey);
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    display: flex;
+    height: 80%;
+
+    border-radius: 50px;
+    background: var(--grey);
+    box-shadow:  20px 20px 60px #c3beb8,
+                -20px -20px 60px #fffff8;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+
+    padding: 0px 20px;
+}
+
+.btn_menu {
+    width: 150px;
+    cursor: pointer;
+    font-size: 20px;
+    border: none;
+    padding: 5px 0px;
+    text-align: center;
+
+    border-radius: 5px;
+    color: var(--grey);
+    background-color: var(--beige);
+
+    transition: transform 0.3s ease-in-out;
+}
+
+.btn_menu:hover {
+    transition: transform 0.3s ease-in-out;
+    transform: scale(1.05);
+}
+
+.main {
+    width: 500px;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    height: 30%;
+}
+
+header h1 {
+    color: var(--sage);
+}
+header p {
+    color: var(--beige);
+}
+
+.sez {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    gap: 20px;
+    height: 70%;
+}
+
+#antipasti {
+    display: flex;
+}
+
+.sez select {
+    width: 80%;
+    font-size: 20px;
+}
