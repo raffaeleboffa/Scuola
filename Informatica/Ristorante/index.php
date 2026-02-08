@@ -67,56 +67,96 @@
                     <h2>Antipasti</h2>
                     <select name="antipasti" id="antipasti_select">
                         <option value="none">Scegli un piatto</option>
-                        <?php foreach($piatti['antipasti'] as $p) echo "<option value='$p'>$p</option>"; ?>
+                        <?php 
+                            foreach($piatti['antipasti'] as $p) {
+                                $sel = (isset($selected['antipasti']) && $selected['antipasti'] == $p) ? "selected" : "";
+                                echo "<option value='$p' $sel>$p</option>"; 
+                            }
+                        ?>
                     </select>
                 </div>
                 <div class="sez" id="formaggi">
                     <h2>Formaggi</h2>
                     <select name="formaggi" id="formaggi_select">
                         <option value="none">Scegli un piatto</option>
-                        <?php foreach($piatti['formaggi'] as $p) echo "<option value='$p'>$p</option>"; ?>
+                        <?php 
+                            foreach($piatti['formaggi'] as $p) {
+                                $sel = (isset($selected['formaggi']) && $selected['formaggi'] == $p) ? "selected" : "";
+                                echo "<option value='$p' $sel>$p</option>"; 
+                            }
+                        ?>
                     </select>
                 </div>
                 <div class="sez" id="primi">
                     <h2>Primi</h2>
                     <select name="primi" id="primi_select">
                         <option value="none">Scegli un piatto</option>
-                        <?php foreach($piatti['primi'] as $p) echo "<option value='$p'>$p</option>"; ?>
+                        <?php 
+                            foreach($piatti['primi'] as $p) {
+                                $sel = (isset($selected['primi']) && $selected['primi'] == $p) ? "selected" : "";
+                                echo "<option value='$p' $sel>$p</option>"; 
+                            }
+                        ?>
                     </select>
                 </div>
                 <div class="sez" id="secondi">
                     <h2>Secondi</h2>
                     <select name="secondi" id="secondi_select">
                         <option value="none">Scegli un piatto</option>
-                        <?php foreach($piatti['secondi'] as $p) echo "<option value='$p'>$p</option>"; ?>
+                        <?php 
+                            foreach($piatti['secondi'] as $p) {
+                                $sel = (isset($selected['secondi']) && $selected['secondi'] == $p) ? "selected" : "";
+                                echo "<option value='$p' $sel>$p</option>"; 
+                            }
+                        ?>
                     </select>
                 </div>
                 <div class="sez" id="contorni">
                     <h2>Contorni</h2>
                     <select name="contorni" id="contorni_select">
                         <option value="none">Scegli un piatto</option>
-                        <?php foreach($piatti['contorni'] as $p) echo "<option value='$p'>$p</option>"; ?>
+                        <?php 
+                            foreach($piatti['contorni'] as $p) {
+                                $sel = (isset($selected['contorni']) && $selected['contorni'] == $p) ? "selected" : "";
+                                echo "<option value='$p' $sel>$p</option>"; 
+                            }
+                        ?>
                     </select>
                 </div>
                 <div class="sez" id="dessert">
                     <h2>Dessert</h2>
                     <select name="dessert" id="dessert_select">
                         <option value="none">Scegli un piatto</option>
-                        <?php foreach($piatti['dessert'] as $p) echo "<option value='$p'>$p</option>"; ?>
+                        <?php 
+                            foreach($piatti['dessert'] as $p) {
+                                $sel = (isset($selected['dessert']) && $selected['dessert'] == $p) ? "selected" : "";
+                                echo "<option value='$p' $sel>$p</option>"; 
+                            }
+                        ?>
                     </select>
                 </div>
                 <div class="sez" id="frutta">
                     <h2>Frutta</h2>
                     <select name="frutta" id="frutta_select">
                         <option value="none">Scegli un piatto</option>
-                        <?php foreach($piatti['frutta'] as $p) echo "<option value='$p'>$p</option>"; ?>
+                        <?php 
+                            foreach($piatti['frutta'] as $p) {
+                                $sel = (isset($selected['frutta']) && $selected['frutta'] == $p) ? "selected" : "";
+                                echo "<option value='$p' $sel>$p</option>"; 
+                            }
+                        ?>
                     </select>
                 </div>
                 <div class="sez" id="cafeAmari">
                     <h2>Cafè & Amari</h2>
                     <select name="cafeAmari" id="cafeAmari_select">
                         <option value="none">Scegli un piatto</option>
-                        <?php foreach($piatti['cafeAmari'] as $p) echo "<option value='$p'>$p</option>"; ?>
+                        <?php 
+                            foreach($piatti['cafeAmari'] as $p) {
+                                $sel = (isset($selected['cafeAmari']) && $selected['cafeAmari'] == $p) ? "selected" : "";
+                                echo "<option value='$p' $sel>$p</option>"; 
+                            }
+                        ?>
                     </select>
                 </div>
                 <div class="invia">
