@@ -161,3 +161,22 @@ input[type="submit"]:active {
     transform: translateY(-1px);
     box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.2);
 }
+
+.ordine {
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+
+    border-radius: 50px;
+    background: var(--grey);
+    box-shadow:  20px 20px 60px #c3beb8,
+                -20px -20px 60px #fffff8;
+}
+
+.ordine ul {
+    margin-bottom: 20px;
+}
+
+.ordine h2 {
+    color: var(--sage);
+}
