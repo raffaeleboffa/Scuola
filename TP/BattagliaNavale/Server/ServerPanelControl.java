@@ -1,20 +1,22 @@
 package BattagliaNavale.Server;
 
+import BattagliaNavale.Server.Game.Game;
 import java.awt.Color;
 import java.net.InetAddress;
 import javax.swing.*;
 
-public class ServerPanelControl extends JPanel {
+public class ServerPanelControl extends JPanel implements Runnable {
     private int porta;
     private String nomeServer;
 
     private Boolean serverAttivo = false;
+    private Thread threadServer;
 
     private JLabel lbl_richiestaPorta, lbl_showIP, lbl_status;
     private JTextField txtField_porta;
     private JButton btn_getPorta;
 
-    ServerManager serverManager = new ServerManager();
+    private ServerManager serverManager = new ServerManager();
 
     public ServerPanelControl() {
         setLayout(null);
@@ -22,7 +24,6 @@ public class ServerPanelControl extends JPanel {
         try {
             nomeServer = InetAddress.getLocalHost().getHostAddress();
         } catch (Exception e) {
-            e.printStackTrace();
             System.out.println("Errore durante l'ottenimento dell'indirizzo IP del server");
             System.exit(1);
         }
@@ -63,9 +64,28 @@ public class ServerPanelControl extends JPanel {
         lbl_status.setBounds(10, 110, 300, 30);
         lbl_status.setForeground(Color.RED);
         add(lbl_status);
+
+        threadServer = new Thread(this);
+        threadServer.start();
     }
 
     public int getPorta() {
         return Integer.parseInt(txtField_porta.getText());
+    }
+
+    @Override
+    public void run() {
+        while(true) {
+            for (Game game : serverManager.getGames()) {
+                add(game.getLbl_status());
+                game.getLbl_status().setBounds(10, 140 + serverManager.getGames().indexOf(game) * 30, 300, 30);
+            }
+
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                System.out.println("Errore durante l'attesa per l'aggiornamento dello stato del server");
+            }
+        }
     }
 }
