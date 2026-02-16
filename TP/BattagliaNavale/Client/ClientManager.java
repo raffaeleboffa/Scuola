@@ -1,12 +1,26 @@
 package BattagliaNavale.Client;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.net.Socket;
 
 public class ClientManager {
-    public void connetti(String ip, int porta) {
-        Socket socketInput = null;
-        Socket socketOutput = null;
+    private Socket socketInput = null;
+    private Socket socketOutput = null;
 
+    private int[][] matriceAvversario = new int[10][10];
+    private int[][] matricePersonale = new int[10][10];
+
+    public ClientManager() {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                matricePersonale[i][j] = 0;
+                matriceAvversario[i][j] = 0;
+            }
+        }
+    }
+
+    public void connetti(String ip, int porta) {
         do {
             try {
                 socketInput = new Socket(ip, porta);
@@ -20,5 +34,21 @@ public class ClientManager {
                 }
             }
         } while(socketInput == null || socketOutput == null);
+    }
+
+    public boolean isConnected() {
+        return socketInput != null && socketOutput != null;
+    }
+
+    public void drawMatrice(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.drawString("Avversario", 450, 30);
+        g.drawString("Tu", 50, 30);
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                g.drawRect(50 + j*30, 50 + i*30, 30, 30);
+                g.drawRect(450 + j*30, 50 + i*30, 30, 30);
+            }
+        }
     }
 }
