@@ -1,5 +1,5 @@
 <?php
-    session_start();
+    include "conn.php";
 
     if (isset($_SESSION["nomeCognome"])) {
         header("Location: home.php");
@@ -14,6 +14,8 @@
             echo "<script>alert('Accesso fallito. Controlla username e password.');</script>";
         }
     }
+
+    $profili = getProfili();
 ?>
 
 <!DOCTYPE html>
@@ -51,6 +53,15 @@
             <input type="text" name="CAP" id="CAP" required>
             <label for="citta">Città:</label>
             <input type="text" name="citta" id="citta" required>
+
+            <hr>
+
+            <select name="profilo" id="profilo" required>
+                <option value="">Seleziona il profilo principale</option>
+                <?php foreach ($profili as $profilo): ?>
+                    <option value="<?php echo $profilo['id']; ?>"><?php echo $profilo['tipo']; ?></option>
+                <?php endforeach; ?>
+            </select>
 
             <hr>
 

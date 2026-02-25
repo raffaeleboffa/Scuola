@@ -56,30 +56,16 @@ input[type="submit"] {
     cursor: pointer;
 }
 
-.check {
+select {
     width: 100%;
-    margin: 10px 0px;
+    padding: 10px;
+    margin-bottom: 10px;
 
-    display: flex;
-    justify-content: left;
-}
-
-.check input {
-    width: auto;
-    margin-right: 10px;
+    border: solid #ccc 1px;
+    border-radius: 5px;
 }
 
 h1 {
     margin-bottom: 20px;
     text-align: center;
-}
-
-table, tr, td, th{
-    width: 100%;
-    border: solid #ccc 1px;
-    padding: 5px;
-}
-
-.anagrafica {
-    max-width: 50%;
 }

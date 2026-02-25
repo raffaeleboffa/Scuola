@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Feb 24, 2026 alle 21:19
+-- Creato il: Feb 25, 2026 alle 13:29
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -24,6 +24,27 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Struttura della tabella `profili`
+--
+
+CREATE TABLE `profili` (
+  `id` int(11) NOT NULL,
+  `tipo` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `profili`
+--
+
+INSERT INTO `profili` (`id`, `tipo`) VALUES
+(1, 'Admin'),
+(2, 'Base'),
+(3, 'Premium'),
+(4, 'Avanzato');
+
+-- --------------------------------------------------------
+
+--
 -- Struttura della tabella `utenti`
 --
 
@@ -38,6 +59,7 @@ CREATE TABLE `utenti` (
   `indirizzo` varchar(100) NOT NULL,
   `CAP` varchar(5) NOT NULL,
   `citta` varchar(50) NOT NULL,
+  `profilo` int(11) NOT NULL,
   `attivo` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -46,21 +68,45 @@ CREATE TABLE `utenti` (
 --
 
 --
+-- Indici per le tabelle `profili`
+--
+ALTER TABLE `profili`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `tipo` (`tipo`);
+
+--
 -- Indici per le tabelle `utenti`
 --
 ALTER TABLE `utenti`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`);
+  ADD UNIQUE KEY `username` (`username`),
+  ADD KEY `fk_utenti_profili` (`profilo`);
 
 --
 -- AUTO_INCREMENT per le tabelle scaricate
 --
 
 --
+-- AUTO_INCREMENT per la tabella `profili`
+--
+ALTER TABLE `profili`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT per la tabella `utenti`
 --
 ALTER TABLE `utenti`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Limiti per le tabelle scaricate
+--
+
+--
+-- Limiti per la tabella `utenti`
+--
+ALTER TABLE `utenti`
+  ADD CONSTRAINT `fk_utenti_profili` FOREIGN KEY (`profilo`) REFERENCES `profili` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
