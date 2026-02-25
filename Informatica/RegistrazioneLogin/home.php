@@ -1,12 +1,5 @@
 <?php
-include "conn.php";
-    session_start();
-
-    if (!isset($_SESSION["nomeCognome"])) {
-        header("Location: index.php");
-        exit();
-    }
-    
+    include "conn.php";    
     $result = $conn->query("SELECT * FROM utenti");
 ?>
 
