@@ -1,7 +1,7 @@
 <?php
     include "conn.php";
 
-    if (isset($_SESSION["nomeCognome"])) {
+    if (isset($_SESSION["idSessione"])) {
         header("Location: home.php");
         exit();
     }

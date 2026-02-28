@@ -1,5 +1,6 @@
 <?php
-    include "conn.php";    
+    include "conn.php";
+       
     $result = $conn->query("
         SELECT
         u.nome nome, u.cognome cognome, u.username username, u.email email,
@@ -9,7 +10,13 @@
         ON u.profilo = p.id
     ")->fetchAll(PDO::FETCH_ASSOC);
 
-    if (!isset($_SESSION["nomeCognome"])) {
+    if (!isset($_SESSION["idSessione"])) {
+        header("Location: index.php");
+        exit();
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
+        logout();
         header("Location: index.php");
         exit();
     }
@@ -24,8 +31,10 @@
         <link rel="stylesheet" href="css/home.css">
     </head>
     <body>
-        <h1>Benvenuto <?php echo $_SESSION["nomeCognome"]; ?></h1>
-        <a href="logout.php">Esci</a>
+        <form method="post">
+            <button type="submit" name="logout">Logout</button>
+        </form>
+
         <table>
             <tr>
                 <th>Nome e Cognome</th>

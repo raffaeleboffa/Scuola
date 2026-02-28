@@ -37,10 +37,13 @@ th, td {
     border-bottom: solid #f3f3f3 2px;
 }
 
-a {
+button {
     color: #333;
     text-decoration: none;
     background-color: #ccc;
     padding: 15px 30px;
     border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
 }
