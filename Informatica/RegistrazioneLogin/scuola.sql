@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Feb 28, 2026 alle 10:01
+-- Creato il: Mar 04, 2026 alle 11:59
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -50,6 +50,7 @@ INSERT INTO `profili` (`id`, `tipo`) VALUES
 
 CREATE TABLE `sessioni` (
   `id` int(11) NOT NULL,
+  `id_sessione` varchar(255) DEFAULT NULL,
   `utente` int(11) NOT NULL,
   `data_login` datetime NOT NULL,
   `data_logout` datetime DEFAULT NULL
@@ -59,9 +60,10 @@ CREATE TABLE `sessioni` (
 -- Dump dei dati per la tabella `sessioni`
 --
 
-INSERT INTO `sessioni` (`id`, `utente`, `data_login`, `data_logout`) VALUES
-(1, 1, '2026-02-28 09:51:57', '2026-02-28 09:52:12'),
-(2, 1, '2026-02-28 09:59:50', '2026-02-28 10:00:59');
+INSERT INTO `sessioni` (`id`, `id_sessione`, `utente`, `data_login`, `data_logout`) VALUES
+(1, NULL, 1, '2026-02-28 09:51:57', '2026-02-28 09:52:12'),
+(2, NULL, 1, '2026-02-28 09:59:50', '2026-02-28 10:00:59'),
+(3, '3c3ed0cc9gau3sdrjpnupupnfj', 1, '2026-03-04 11:59:12', '2026-03-04 11:59:45');
 
 -- --------------------------------------------------------
 
@@ -131,7 +133,7 @@ ALTER TABLE `profili`
 -- AUTO_INCREMENT per la tabella `sessioni`
 --
 ALTER TABLE `sessioni`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT per la tabella `utenti`

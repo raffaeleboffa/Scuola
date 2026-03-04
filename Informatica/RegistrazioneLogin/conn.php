@@ -38,7 +38,8 @@
             $utente = $stmt->fetch(PDO::FETCH_ASSOC);
 
             // Inserimento nuova sessione per l'utente appena registrato
-            $stmt = $conn->prepare("INSERT INTO sessioni (utente, data_login, data_logout) VALUES (:utente, NOW(), NULL)");
+            $stmt = $conn->prepare("INSERT INTO sessioni (id_sessione, utente, data_login, data_logout) VALUES (:id_sessione, :utente, NOW(), NULL)");
+            $stmt->bindParam(':id_sessione', session_id());
             $stmt->bindParam(':utente', $utente['id']);
             $stmt->execute();
 
@@ -49,6 +50,7 @@
 
             $sessione = $stmt->fetch(PDO::FETCH_ASSOC);
 
+            // ID del record della sessione appena creata
             $_SESSION["idSessione"] = $sessione['id'];
 
             return true;
@@ -71,7 +73,8 @@
 
         if ($utente && password_verify($postData['password'], $utente['password'])) {
             // Inserimento nuova sessione per l'utente che ha effettuato il login
-            $stmt = $conn->prepare("INSERT INTO sessioni (utente, data_login, data_logout) VALUES (:utente, NOW(), NULL)");
+            $stmt = $conn->prepare("INSERT INTO sessioni (id_sessione, utente, data_login, data_logout) VALUES (:id_sessione, :utente, NOW(), NULL)");
+            $stmt->bindParam(':id_sessione', session_id());
             $stmt->bindParam(':utente', $utente['id']);
             $stmt->execute();
 
@@ -82,6 +85,7 @@
 
             $sessione = $stmt->fetch(PDO::FETCH_ASSOC);
 
+            // ID del record della sessione appena creata
             $_SESSION["idSessione"] = $sessione['id'];
 
             return true;
