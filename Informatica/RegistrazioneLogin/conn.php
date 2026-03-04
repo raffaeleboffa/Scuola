@@ -43,15 +43,8 @@
             $stmt->bindParam(':utente', $utente['id']);
             $stmt->execute();
 
-            // Recupera l'ID della sessione appena creata
-            $stmt = $conn->prepare("SELECT id FROM sessioni WHERE utente = :utente ORDER BY data_login DESC LIMIT 1");
-            $stmt->bindParam(':utente', $utente['id']);
-            $stmt->execute();
-
-            $sessione = $stmt->fetch(PDO::FETCH_ASSOC);
-
             // ID del record della sessione appena creata
-            $_SESSION["idSessione"] = $sessione['id'];
+            $_SESSION["idSessione"] = session_id();
 
             return true;
         } catch (PDOException $e) {
@@ -78,15 +71,8 @@
             $stmt->bindParam(':utente', $utente['id']);
             $stmt->execute();
 
-            // Recupera l'ID della sessione appena creata
-            $stmt = $conn->prepare("SELECT id FROM sessioni WHERE utente = :utente ORDER BY data_login DESC LIMIT 1");
-            $stmt->bindParam(':utente', $utente['id']);
-            $stmt->execute();
-
-            $sessione = $stmt->fetch(PDO::FETCH_ASSOC);
-
             // ID del record della sessione appena creata
-            $_SESSION["idSessione"] = $sessione['id'];
+            $_SESSION["idSessione"] = session_id();
 
             return true;
         } else {
@@ -97,7 +83,7 @@
     function logout() {
         global $conn;
         if (isset($_SESSION["idSessione"])) {
-            $query = $conn->prepare("UPDATE sessioni SET data_logout = NOW() WHERE id = :idSessione");
+            $query = $conn->prepare("UPDATE sessioni SET data_logout = NOW() WHERE id_sessione = :idSessione");
             $query->bindParam(':idSessione', $_SESSION["idSessione"]);
             $query->execute();
 

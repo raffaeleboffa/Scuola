@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mar 04, 2026 alle 11:59
+-- Creato il: Mar 04, 2026 alle 13:07
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -49,8 +49,7 @@ INSERT INTO `profili` (`id`, `tipo`) VALUES
 --
 
 CREATE TABLE `sessioni` (
-  `id` int(11) NOT NULL,
-  `id_sessione` varchar(255) DEFAULT NULL,
+  `id_sessione` varchar(255) NOT NULL,
   `utente` int(11) NOT NULL,
   `data_login` datetime NOT NULL,
   `data_logout` datetime DEFAULT NULL
@@ -60,10 +59,10 @@ CREATE TABLE `sessioni` (
 -- Dump dei dati per la tabella `sessioni`
 --
 
-INSERT INTO `sessioni` (`id`, `id_sessione`, `utente`, `data_login`, `data_logout`) VALUES
-(1, NULL, 1, '2026-02-28 09:51:57', '2026-02-28 09:52:12'),
-(2, NULL, 1, '2026-02-28 09:59:50', '2026-02-28 10:00:59'),
-(3, '3c3ed0cc9gau3sdrjpnupupnfj', 1, '2026-03-04 11:59:12', '2026-03-04 11:59:45');
+INSERT INTO `sessioni` (`id_sessione`, `utente`, `data_login`, `data_logout`) VALUES
+('', 1, '2026-02-28 09:51:57', '2026-02-28 09:52:12'),
+('', 1, '2026-02-28 09:59:50', '2026-02-28 10:00:59'),
+('3c3ed0cc9gau3sdrjpnupupnfj', 1, '2026-03-04 11:59:12', '2026-03-04 11:59:45');
 
 -- --------------------------------------------------------
 
@@ -108,7 +107,6 @@ ALTER TABLE `profili`
 -- Indici per le tabelle `sessioni`
 --
 ALTER TABLE `sessioni`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `fk_sessioni_utenti` (`utente`);
 
 --
@@ -128,12 +126,6 @@ ALTER TABLE `utenti`
 --
 ALTER TABLE `profili`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT per la tabella `sessioni`
---
-ALTER TABLE `sessioni`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT per la tabella `utenti`
