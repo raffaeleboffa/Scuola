@@ -1,5 +1,8 @@
 <?php
     session_start();
+    require_once 'class/UserObj.php';
+
+    $users = array();
 
     $host = 'localhost';
     $dbname = 'scuola';
@@ -13,34 +16,17 @@
         echo "Connessione al database fallita";
     }
 
-    function registrazione($postData) {
+    function registrazione($utente) {
         global $conn;
-        $stmt = $conn->prepare("INSERT INTO utenti (nome, cognome, username, email, password, telefono, indirizzo, CAP, citta, profilo, attivo) VALUES (:nome, :cognome, :username, :email, :password, :telefono, :indirizzo, :CAP, :citta, :profilo, 1)");
-        $stmt->bindParam(':nome', $postData['nome']);
-        $stmt->bindParam(':cognome', $postData['cognome']);
-        $stmt->bindParam(':username', $postData['username']);
-        $stmt->bindParam(':email', $postData['email']);
-        $stmt->bindParam(':password', password_hash($postData['password'], PASSWORD_DEFAULT));
-        $stmt->bindParam(':telefono', $postData['telefono']);
-        $stmt->bindParam(':indirizzo', $postData['indirizzo']);
-        $stmt->bindParam(':CAP', $postData['CAP']);
-        $stmt->bindParam(':citta', $postData['citta']);
-        $stmt->bindParam(':profilo', $postData['profilo']);
+        if (!$utente->putInDB()) {
+            return false;
+        }
 
         try {
-            $stmt->execute();
-
-            // Recupera l'ID dell'utente appena registrato
-            $stmt = $conn->prepare("SELECT id FROM utenti WHERE username = :username");
-            $stmt->bindParam(':username', $postData['username']);
-            $stmt->execute();
-
-            $utente = $stmt->fetch(PDO::FETCH_ASSOC);
-
             // Inserimento nuova sessione per l'utente appena registrato
             $stmt = $conn->prepare("INSERT INTO sessioni (id_sessione, utente, data_login, data_logout) VALUES (:id_sessione, :utente, NOW(), NULL)");
             $stmt->bindParam(':id_sessione', session_id());
-            $stmt->bindParam(':utente', $utente['id']);
+            $stmt->bindParam(':utente', $utente->getId());
             $stmt->execute();
 
             // ID del record della sessione appena creata
@@ -52,32 +38,27 @@
         }
     }
 
-    function accedi($postData) {
-        global $conn;
-        $stmt = $conn->prepare("SELECT * FROM utenti WHERE username = :username AND attivo = 1");
-        $stmt->bindParam(':username', $postData['username']);
+    function accedi($utente) {
+        global $users, $conn;
+        usersDBtoClass();
 
-        try {
-            $stmt->execute();
-            $utente = $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            return false;
+        foreach ($users as $user) {
+            if ($user->getUsername() == $utente->getUsername()) {
+                $user->checkPassword($utente->getPassword());
+
+                // Inserimento nuova sessione per l'utente che ha effettuato il login
+                $stmt = $conn->prepare("INSERT INTO sessioni (id_sessione, utente, data_login, data_logout) VALUES (:id_sessione, :utente, NOW(), NULL)");
+                $stmt->bindParam(':id_sessione', session_id());
+                $stmt->bindParam(':utente', $user->getId());
+                $stmt->execute();
+
+                // ID del record della sessione appena creata
+                $_SESSION["idSessione"] = session_id();
+
+                return true;
+            }
         }
-
-        if ($utente && password_verify($postData['password'], $utente['password'])) {
-            // Inserimento nuova sessione per l'utente che ha effettuato il login
-            $stmt = $conn->prepare("INSERT INTO sessioni (id_sessione, utente, data_login, data_logout) VALUES (:id_sessione, :utente, NOW(), NULL)");
-            $stmt->bindParam(':id_sessione', session_id());
-            $stmt->bindParam(':utente', $utente['id']);
-            $stmt->execute();
-
-            // ID del record della sessione appena creata
-            $_SESSION["idSessione"] = session_id();
-
-            return true;
-        } else {
-            return false;
-        }
+        return false;
     }
 
     function logout() {
@@ -99,6 +80,20 @@
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             return [];
+        }
+    }
+
+    function usersDBtoClass() {
+        global $users, $conn;
+        $stmt = $conn->prepare("SELECT * FROM utenti WHERE attivo = 1");
+        try {
+            $stmt->execute();
+            $utenti = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($utenti as $utente) {
+                $users[] = new UserObj($utente['id'], $utente['nome'], $utente['cognome'], $utente['username'], $utente['email'], $utente['password'], $utente['telefono'], $utente['indirizzo'], $utente['CAP'], $utente['citta'], $utente['profilo']);
+            }
+        } catch (PDOException $e) {
+            $users = [];
         }
     }
 ?>

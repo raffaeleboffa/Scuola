@@ -1,5 +1,5 @@
 <?php
-    include "conn.php";
+    require_once "conn.php";
 
     if (isset($_SESSION["idSessione"])) {
         header("Location: home.php");

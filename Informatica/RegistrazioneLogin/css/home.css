@@ -28,6 +28,7 @@ table {
 
     background-color: #ccc;
     border-radius: 10px;
+    overflow-x: auto;
 }
 
 th, td {

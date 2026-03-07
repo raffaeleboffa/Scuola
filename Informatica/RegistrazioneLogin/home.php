@@ -1,5 +1,5 @@
 <?php
-    include "conn.php";
+    require_once "conn.php";
        
     $result = $conn->query("
         SELECT
