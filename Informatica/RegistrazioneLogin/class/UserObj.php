@@ -134,6 +134,9 @@
             public function getStato() {
                 return $this->stato;
             }
+            public function setStato($stato) {
+                $this->stato = $stato;
+            }
 
         // Funzioni di gestione
 
@@ -159,10 +162,6 @@
             } catch (PDOException $e) {
                 return null;
             }
-        }
-
-        public function deleteUser() {
-            $this->stato = "cancellato";
         }
 
         public function checkPassword($password) {
@@ -194,8 +193,9 @@
         }
 
         public function delRecord() {
+            global $conn;
+            
             if ($this->id != null) {
-                global $conn;
                 $stmt = $conn->prepare("DELETE FROM utenti WHERE id = :id");
                 $stmt->bindParam(':id', $this->id);
 

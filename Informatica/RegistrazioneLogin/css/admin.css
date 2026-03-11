@@ -39,21 +39,12 @@ th, td {
 }
 
 button {
-    color: #333;
+    color: #ccc;
     text-decoration: none;
-    background-color: #ccc;
+    background-color: #333;
     padding: 15px 30px;
     border-radius: 5px;
     border: none;
     font-size: 16px;
     cursor: pointer;
-}
-
-.header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-
-    width: 80%;
 }
