@@ -2,8 +2,6 @@
     session_start();
     require_once 'class/UserObj.php';
 
-    $users = array();
-
     $host = 'localhost';
     $dbname = 'scuola';
     $username = 'root';
@@ -18,9 +16,11 @@
 
     function registrazione($utente) {
         global $conn;
-        if (!$utente->putInDB()) {
+        if (!$utente->addRecord()) {
             return false;
         }
+
+        $utente->getDataLost();
 
         try {
             // Inserimento nuova sessione per l'utente appena registrato
@@ -29,8 +29,9 @@
             $stmt->bindParam(':utente', $utente->getId());
             $stmt->execute();
 
-            // ID del record della sessione appena creata
+            // ID del record della sessione appena creata e ID del profilo dell'utente appena registrato
             $_SESSION["idSessione"] = session_id();
+            $_SESSION["idProfilo"] = $utente->getProfilo();
 
             return true;
         } catch (PDOException $e) {
@@ -39,12 +40,14 @@
     }
 
     function accedi($utente) {
-        global $users, $conn;
-        usersDBtoClass();
+        global $conn;
+        $users = usersDBtoClass(1);
 
         foreach ($users as $user) {
             if ($user->getUsername() == $utente->getUsername()) {
                 $user->checkPassword($utente->getPassword());
+
+                $utente->getDataLost();
 
                 // Inserimento nuova sessione per l'utente che ha effettuato il login
                 $stmt = $conn->prepare("INSERT INTO sessioni (id_sessione, utente, data_login, data_logout) VALUES (:id_sessione, :utente, NOW(), NULL)");
@@ -52,8 +55,9 @@
                 $stmt->bindParam(':utente', $user->getId());
                 $stmt->execute();
 
-                // ID del record della sessione appena creata
+                // ID del record della sessione appena creata e ID del profilo dell'utente appena registrato
                 $_SESSION["idSessione"] = session_id();
+                $_SESSION["idProfilo"] = $user->getProfilo();
 
                 return true;
             }
@@ -83,17 +87,27 @@
         }
     }
 
-    function usersDBtoClass() {
-        global $users, $conn;
-        $stmt = $conn->prepare("SELECT * FROM utenti WHERE attivo = 1");
+    function usersDBtoClass($attivo = null) {
+        global $conn;
+        $users = [];
+
+        if ($attivo === null) {
+            $stmt = $conn->prepare("SELECT * FROM utenti");
+        } else {
+            $stmt = $conn->prepare("SELECT * FROM utenti WHERE attivo = :attivo");
+            $stmt->bindParam(':attivo', $attivo);
+        }
+
         try {
             $stmt->execute();
             $utenti = $stmt->fetchAll(PDO::FETCH_ASSOC);
             foreach ($utenti as $utente) {
-                $users[] = new UserObj($utente['id'], $utente['nome'], $utente['cognome'], $utente['username'], $utente['email'], $utente['password'], $utente['telefono'], $utente['indirizzo'], $utente['CAP'], $utente['citta'], $utente['profilo']);
+                $users[] = new UserObj($utente);
             }
         } catch (PDOException $e) {
             $users = [];
         }
+
+        return $users;
     }
 ?>

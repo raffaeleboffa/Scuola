@@ -1,14 +1,5 @@
 <?php
     require_once "conn.php";
-       
-    $result = $conn->query("
-        SELECT
-        u.nome nome, u.cognome cognome, u.username username, u.email email,
-        u.telefono telefono, u.indirizzo indirizzo, u.CAP CAP, u.citta citta,
-        u.attivo attivo, p.tipo profilo
-        FROM utenti u JOIN profili p
-        ON u.profilo = p.id
-    ")->fetchAll(PDO::FETCH_ASSOC);
 
     if (!isset($_SESSION["idSessione"])) {
         header("Location: index.php");
@@ -19,7 +10,17 @@
         logout();
         header("Location: index.php");
         exit();
+    } else if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['salva'])) {
+        foreach ($users as $user) {
+            if ($user->getStato() == "modificato") {
+                $user->modRecord();
+            } else if ($user->getStato() == "cancellato") {
+                $user->delRecord();
+            }
+        }
     }
+
+    $users = usersDBtoClass();
 ?>
 
 <!DOCTYPE html>
@@ -31,12 +32,19 @@
         <link rel="stylesheet" href="css/home.css">
     </head>
     <body>
-        <form method="post">
-            <button type="submit" name="logout">Logout</button>
-        </form>
+        <div class="header">
+            <form method="post">
+                <button type="submit" name="logout">Logout</button>
+            </form>
+
+            <form method="post">
+                <button type="submit" name="salva">Salva</button>
+            </form>
+        </div>
 
         <table>
             <tr>
+                <th>ID</th>
                 <th>Nome e Cognome</th>
                 <th>Username</th>
                 <th>Email</th>
@@ -49,17 +57,18 @@
             </tr>
 
             <?php
-                foreach ($result as $row) {
+                foreach ($users as $user) {
                     echo "<tr>";
-                    echo "<td>" . $row['nome'] . " " . $row['cognome'] . "</td>";
-                    echo "<td>" . $row['username'] . "</td>";
-                    echo "<td>" . $row['email'] . "</td>";
-                    echo "<td>" . $row['telefono'] . "</td>";
-                    echo "<td>" . $row['indirizzo'] . "</td>";
-                    echo "<td>" . $row['CAP'] . "</td>";
-                    echo "<td>" . $row['citta'] . "</td>";
-                    echo "<td>" . $row['profilo'] . "</td>";
-                    echo "<td>" . ($row['attivo'] ? "Sì" : "No") . "</td>";
+                    echo "<td>" . $user->getId() . "</td>";
+                    echo "<td>" . $user->getNome() . " " . $user->getCognome() . "</td>";
+                    echo "<td>" . $user->getUsername() . "</td>";
+                    echo "<td>" . $user->getEmail() . "</td>";
+                    echo "<td>" . $user->getTelefono() . "</td>";
+                    echo "<td>" . $user->getIndirizzo() . "</td>";
+                    echo "<td>" . $user->getCAP() . "</td>";
+                    echo "<td>" . $user->getCitta() . "</td>";
+                    echo "<td>" . $user->getProfilo() . "</td>";
+                    echo "<td>" . ($user->getAttivo() ? "Sì" : "No") . "</td>";
                     echo "</tr>";
                 }
             ?>
