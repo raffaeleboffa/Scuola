@@ -1,6 +1,7 @@
 <?php
     session_start();
     require_once 'class/UserObj.php';
+    require_once 'class/SessionObj.php';
 
     $host = 'localhost';
     $dbname = 'scuola';
@@ -68,10 +69,11 @@
     function logout() {
         global $conn;
         if (isset($_SESSION["idSessione"])) {
-            $query = $conn->prepare("UPDATE sessioni SET data_logout = NOW() WHERE id_sessione = :idSessione");
+            $query = $conn->prepare("UPDATE sessioni SET data_logout = NOW() WHERE id_sessione = :idSessione AND data_logout IS NULL LIMIT 1");
             $query->bindParam(':idSessione', $_SESSION["idSessione"]);
             $query->execute();
 
+            session_unset();
             session_destroy();
         }
     }
@@ -89,7 +91,7 @@
 
     function usersDBtoClass($attivo = null) {
         global $conn;
-        $users = [];
+        $u = [];
 
         if ($attivo === null) {
             $stmt = $conn->prepare("SELECT * FROM utenti");
@@ -102,12 +104,31 @@
             $stmt->execute();
             $utenti = $stmt->fetchAll(PDO::FETCH_ASSOC);
             foreach ($utenti as $utente) {
-                $users[] = new UserObj($utente);
+                $u[] = new UserObj($utente);
             }
         } catch (PDOException $e) {
-            $users = [];
+            $u = [];
         }
 
-        return $users;
+        return $u;
+    }
+
+    function sessionDBtoClass() {
+        global $conn;
+        $s = [];
+
+        $stmt = $conn->prepare("SELECT sessioni.id id, sessioni.id_sessione id_sessione, sessioni.data_login data_login, sessioni.data_logout data_logout, utenti.username username FROM sessioni JOIN utenti ON sessioni.utente = utenti.id ORDER BY sessioni.data_login DESC");
+
+        try {
+            $stmt->execute();
+            $sessioni = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($sessioni as $sessione) {
+                $s[] = new Session($sessione);
+            }
+        } catch (PDOException $e) {
+            $s = [];
+        }
+
+        return $s;
     }
 ?>

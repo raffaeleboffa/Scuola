@@ -13,8 +13,6 @@
         private $profilo;
         private $attivo;
 
-        private $stato;
-
         public function __construct($values) {
             $this->id = isset($values['id']) ? $values['id'] : null;
             $this->nome = isset($values['nome']) ? $values['nome'] : null;
@@ -28,8 +26,6 @@
             $this->citta = isset($values['citta']) ? $values['citta'] : null;
             $this->profilo = isset($values['profilo']) ? $values['profilo'] : null;
             $this->attivo = isset($values['attivo']) ? $values['attivo'] : 1;
-
-            $this->stato = null;
         }
 
         // Getter e Setter
@@ -45,7 +41,6 @@
             }
             public function setNome($nome) {
                 $this->nome = $nome;
-                $this->stato = "modificato";
             }
 
             // Cognome
@@ -54,7 +49,6 @@
             }
             public function setCognome($cognome) {
                 $this->cognome = $cognome;
-                $this->stato = "modificato";
             }
 
             // Username
@@ -68,7 +62,6 @@
             }
             public function setEmail($email) {
                 $this->email = $email;
-                $this->stato = "modificato";
             }
 
             // Password
@@ -82,7 +75,6 @@
             }
             public function setTelefono($telefono) {
                 $this->telefono = $telefono;
-                $this->stato = "modificato";
             }
 
             // Indirizzo
@@ -91,7 +83,6 @@
             }
             public function setIndirizzo($indirizzo) {
                 $this->indirizzo = $indirizzo;
-                $this->stato = "modificato";
             }
 
             // CAP
@@ -100,7 +91,6 @@
             }
             public function setCAP($CAP) {
                 $this->CAP = $CAP;
-                $this->stato = "modificato";
             }
 
             // Città
@@ -109,7 +99,6 @@
             }
             public function setCitta($citta) {
                 $this->citta = $citta;
-                $this->stato = "modificato";
             }
 
             // Profilo
@@ -118,7 +107,6 @@
             }
             public function setProfilo($profilo) {
                 $this->profilo = $profilo;
-                $this->stato = "modificato";
             }
 
              // Attivo
@@ -127,15 +115,6 @@
             }
             public function setAttivo($attivo) {
                 $this->attivo = $attivo;
-                $this->stato = "modificato";
-            }
-
-            // Stato
-            public function getStato() {
-                return $this->stato;
-            }
-            public function setStato($stato) {
-                $this->stato = $stato;
             }
 
         // Funzioni di gestione
