@@ -113,11 +113,16 @@
         return $u;
     }
 
-    function sessionDBtoClass() {
+    function sessionDBtoClass($limit = null) {
         global $conn;
         $s = [];
 
-        $stmt = $conn->prepare("SELECT sessioni.id id, sessioni.id_sessione id_sessione, sessioni.data_login data_login, sessioni.data_logout data_logout, utenti.username username FROM sessioni JOIN utenti ON sessioni.utente = utenti.id ORDER BY sessioni.data_login DESC");
+        if ($limit != null) {
+            $stmt = $conn->prepare("SELECT sessioni.id id, sessioni.id_sessione id_sessione, sessioni.data_login data_login, sessioni.data_logout data_logout, utenti.username username FROM sessioni JOIN utenti ON sessioni.utente = utenti.id ORDER BY sessioni.data_login DESC LIMIT :limit");
+            $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+        } else {
+            $stmt = $conn->prepare("SELECT sessioni.id id, sessioni.id_sessione id_sessione, sessioni.data_login data_login, sessioni.data_logout data_logout, utenti.username username FROM sessioni JOIN utenti ON sessioni.utente = utenti.id ORDER BY sessioni.data_login DESC");
+        }
 
         try {
             $stmt->execute();

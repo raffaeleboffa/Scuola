@@ -24,10 +24,18 @@
                 break;
             }
         }
+    } else if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['filtro'])) {
+        $filtro = $_POST['filtro'];
+        if ($filtro != "") {
+            $sessioni = sessionDBtoClass($filtro);
+        } else {
+            $sessioni = sessionDBtoClass();
+        }
+    } else {
+        $sessioni = sessionDBtoClass();
     }
 
     $users = usersDBtoClass();
-    $sessioni = sessionDBtoClass();
 ?>
 
 <!DOCTYPE html>
@@ -85,6 +93,17 @@
         </table>
 
         <h1>Accessi</h1>
+        <form method="post" class="filter-form">
+            <select name="filtro" id="">
+                <option value="">Tutti</option>
+                <option value="5">Ultimi 5</option>
+                <option value="10">Ultimi 10</option>
+                <option value="20">Ultimi 20</option>
+                <option value="50">Ultimi 50</option>
+                <option value="100">Ultimi 100</option>
+            </select>
+            <button>Filtra</button>
+        </form>
         <table>
             <tr>
                 <th>ID sessione</th>
