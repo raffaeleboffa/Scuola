@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<rubrica>
+    <persona nazionalita="it">
+        <nome>Luca</nome>
+        <cognome>Rossi</cognome>
+        <via num="23">Giuann Lollo</via>
+        <eta>35</eta>
+        <telefono>1234567</telefono>
+    </persona>
+    <persona nazionalita="uk">
+        <nome>Anna</nome>
+        <cognome>Smith</cognome>
+        <via num="12">Dummy Street</via>
+        <eta>28</eta>
+        <telefono>8765432</telefono>
+    </persona>   
+</rubrica>

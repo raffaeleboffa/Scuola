@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<curriculum>
+    <dati_personali nazionalita="it">
+        <nome>Maria</nome>
+        <cognome>Bianchi</cognome>
+        <data_nascita>15/03/1990</data_nascita>
+        <luogo_nascita>Milano</luogo_nascita>
+        <email>maria.bianchi@email.com</email>
+        <telefono>3331234567</telefono>
+        <indirizzo>
+            <via num="45">Via Roma</via>
+            <citta>Milano</citta>
+            <cap>20121</cap>
+        </indirizzo>
+    </dati_personali>
+    
+    <esperienze_lavorative>
+        <esperienza ruolo="Sviluppatore Software" datainizio="2020-01" datafine="2024-12">
+            <azienda>TechSolutions Srl</azienda>
+            <luogo>Roma</luogo>
+            <descrizione>Sviluppo applicazioni web con PHP, JavaScript e MySQL. Gestione progetti agile.</descrizione>
+        </esperienza>
+        <esperienza ruolo="Analista Programmatore" datainizio="2017-01" datafine="2019-12">
+            <azienda>DigitalLab Spa</azienda>
+            <luogo>Milano</luogo>
+            <descrizione>Analisi requisiti e sviluppo software enterprise.</descrizione>
+        </esperienza>
+    </esperienze_lavorative>
+    
+    <formazione>
+        <titolo laurea="Informatica" anno="2016">
+            <universita>Universita degli Studi di Milano</universita>
+            <voto>110/110 e lode</voto>
+        </titolo>
+        <titolo laurea="Matematica" anno="2013">
+            <universita>Liceo Scientifico Galileo Galilei</universita>
+            <voto>100/100</voto>
+        </titolo>
+    </formazione>
+    
+    <competenze>
+        <lingua nome="Italiano" livello="Madrelingua"/>
+        <lingua nome="Inglese" livello="C1"/>
+        <lingua nome="Spagnolo" livello="B2"/>
+        <competenza nome="PHP" livello="Avanzato"/>
+        <competenza nome="JavaScript" livello="Avanzato"/>
+        <competenza nome="MySQL" livello="Avanzato"/>
+        <competenza nome="HTML/CSS" livello="Avanzato"/>
+    </competenze>
+    
+    <hobby>
+        <hobby>Sci</hobby>
+        <hobby>Lettura</hobby>
+        <hobby>Viaggi</hobby>
+    </hobby>
+</curriculum>
+
