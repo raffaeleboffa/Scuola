@@ -1,4 +1,4 @@
-/* Reset e stili base */
+/* Reset */
 * {
     margin: 0;
     padding: 0;
@@ -6,48 +6,70 @@
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
-    padding: 50px 20px;
-
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    gap: 30px;
+    background: #f0f2f5;
+    min-height: 100vh;
+    padding: 30px 20px;
+    max-width: 80%;
+    margin: 0 auto;
 }
 
-/* Bottone Logout */
-button {
-    color: #ffffff;
-    text-decoration: none;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 15px 40px;
-    border-radius: 8px;
+/* Pulsante logout in alto a destra */
+form:first-of-type {
+    text-align: right;
+    margin-bottom: 30px;
+}
+
+button[name="logout"] {
+    background: #e53e3e;
+    color: white;
     border: none;
-    font-size: 16px;
-    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    font-size: 0.9rem;
+    transition: background 0.3s;
 }
 
-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(102, 126, 234, 0.4);
+button[name="logout"]:hover {
+    background: #c53030;
 }
 
-button:active {
-    transform: translateY(0);
+/* Contenuto principale */
+main, .welcome {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 40px;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+h1 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    border-left: 5px solid #667eea;
+    padding-left: 15px;
+    display: inline-block;
+    text-align: left;
+}
+
+p {
+    color: #4a5568;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin-top: 20px;
 }
 
 /* Responsive */
-@media (max-width: 600px) {
-    button {
-        padding: 12px 30px;
-        font-size: 14px;
+@media (max-width: 768px) {
+    body {
+        max-width: 95%;
+        padding: 20px 10px;
+    }
+    .welcome, main {
+        padding: 25px;
     }
 }
