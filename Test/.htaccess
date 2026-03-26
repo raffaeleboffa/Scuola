@@ -1,0 +1,16 @@
+<IfModule mod_headers.c>
+
+    # BLOCCA IL MIME SNIFFING
+    Header set X-Content-Type-Options "nosniff"
+
+    # PROTEZIONE DAL CLICKJACKING (Opzionale ma consigliato)
+    Header set X-Frame-Options "SAMEORIGIN"
+
+    # CONTENT SECURITY POLICY (CSP) - Esempio base sicuro
+    Header always set Content-Security-Policy "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none';"
+
+    # TENTA DI NASCONDERE LE VERSIONI (Note importanti sotto)
+    Header unset X-Powered-By
+    Header unset Server
+
+</IfModule>
