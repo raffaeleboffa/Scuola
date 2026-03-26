@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ordine>
+    <cliente abitudinario="true">
+        <nome>Paolo</nome>
+        <cognome>Rossi</cognome>
+        <tipologia>abituale</tipologia>
+        <domicilio>
+            <indirizzo>via dei Pensieri 60</indirizzo>
+            <città>Livorno</città>
+        </domicilio>
+        <contatto>
+            <email>p.rossi@mail.com</email>
+        </contatto>
+    </cliente>
+    
+    <richiesta>
+        <data>2013-06-10</data>
+        <ora>09:30</ora>
+    </richiesta>
+
+    <consegna>
+        <prevista>
+            <data>2013-06-10</data>
+            <ora_inizio>13:30</ora_inizio>
+            <ora_fine>14:00</ora_fine>
+        </prevista>
+        <luogo>domicilio del cliente</luogo>
+    </consegna>
+
+    <pagamento>
+        <modalità>carta di credito</modalità>
+        <tempistica>immediatamente dopo la consegna</tempistica>
+    </pagamento>
+</ordine>
