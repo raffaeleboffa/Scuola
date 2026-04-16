@@ -6,14 +6,36 @@
         exit();
     }
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        if (isset($_POST['login'])) {
-            $email = trim($_POST['email']);
-            $token = trim($_POST['token']);
-            if (isset($email) && isset($token)) {
-                $error = "Inserisci email o token privato di accesso.";
-            } else if (isset($email)) {
-                
+    if ($_SERVER['REQUEST_METHOD'] == 'POST'&& isset($_POST['login'])) {
+        $email = trim($_POST['email']);
+        $token = trim($_POST['token']);
+
+        if (strlen($email) > 0 && strlen($token) > 0) {
+            $message = "Inserisci solo l'indirizzo email o token privato di accesso.";
+        } else if (strlen($email) == 0 && strlen($token) == 0) {
+            $message = "Inserisci un indirizzo email o token privato di accesso.";
+        } else {
+            require_once 'manager.php';
+            if (strlen($email) > 0) {
+                if (sendMail($email)) {
+                    $message = "Email inviata con successo. Controlla la tua casella di posta e accedi con il token di accesso.";
+                } else {
+                    $message = "Si è verificato un errore durante l'invio dell'email.";
+                }
+            } else {
+                $token = explode("#", $token);
+                $user = prepareQuery("SELECT * FROM utenti WHERE id = :id", [":id" => $token[0]]);
+                if ($user && count($user) > 0) {
+                    if (password_verify($token[1], $user[0]['token'])) {
+                        $_SESSION['user_id'] = $user[0]['id'];
+                        header('Location: chat.php');
+                        exit();
+                    } else {
+                        $message = "Token privato di accesso non valido.";
+                    }
+                } else {
+                    $message = "Utente non trovato.";
+                }
             }
         }
     }
@@ -24,7 +46,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>WEBLINK</title>
+        <title>Weblink</title>
         <link rel="stylesheet" href="css/index.css">
     </head>
     <body>
@@ -39,8 +61,8 @@
             </form>
         </div>
         <?php 
-            if (isset($error)) {
-                echo "<div class='notifica'>" . $error . "</div>";
+            if (isset($message)) {
+                echo "<div class='notifica'>" . $message . "</div>";
             }
         ?>
     </body>
