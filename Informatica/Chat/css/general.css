@@ -7,8 +7,11 @@
     --white: #fff;
     --grey: #555;
     --ciano: #A9B4FF;
+    --black: #000;
     --shadow: #0000004d;
     --glass: #57575733;
+
+    --width-lista-chat: 500px;
 }
 
 * {

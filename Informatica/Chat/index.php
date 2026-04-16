@@ -16,6 +16,7 @@
             $message = "Inserisci un indirizzo email o token privato di accesso.";
         } else {
             require_once 'manager.php';
+
             if (strlen($email) > 0) {
                 if (sendMail($email)) {
                     $message = "Email inviata con successo. Controlla la tua casella di posta e accedi con il token di accesso.";
@@ -48,6 +49,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Weblink</title>
         <link rel="stylesheet" href="css/index.css">
+        <link rel="shortcut icon" href="storage/img/icon.svg" type="image/x-icon">
     </head>
     <body>
         <img class="logo" src="storage/img/logo.svg">
