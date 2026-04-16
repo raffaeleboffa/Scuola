@@ -42,7 +42,7 @@
                 "INSERT INTO utenti (nome, cognome, username, email, token, bio, profilo, data_creazione) VALUES (:nome, :cognome, :username, :email, :token, :bio, :profilo, NOW())",
                 [
                     ":nome" => "Utente",
-                    ":cognome" => $userId,
+                    ":cognome" => null,
                     ":username" => $username,
                     ":email" => $email,
                     ":token" => password_hash($token, PASSWORD_DEFAULT),
